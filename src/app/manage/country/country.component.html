@@ -1,0 +1,41 @@
+<form #countryForm="ngForm" (ngSubmit)="onSubmit(countryForm.value)" novalidate>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                      <input name="country_code" class="form-control" placeholder="Country Code" #country_codefield="ngModel" required [(ngModel)]="country_code" [ngClass]="{ 'is-invalid': countryForm.submitted && country_codefield.invalid }">
+                      <div *ngIf="countryForm.submitted && country_codefield.invalid" class="invalid-feedback">
+                        <div *ngIf="country_codefield.errors.required">Country Code is required</div>
+                      </div>   
+                    </div>
+                    
+                    <div class="form-group">
+                      <input name="name" class="form-control" placeholder="Country Name" required ngModel #name_field="ngModel" required [(ngModel)]="name" [ngClass]="{ 'is-invalid': countryForm.submitted && name_field.invalid }">
+                      <div *ngIf="countryForm.submitted && name_field.invalid" class="invalid-feedback">
+                        <div *ngIf="name_field.errors.required">Country Name is required</div>
+                      </div>  
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button class="btn btn-warning">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <tr><td>Sr. No</td><td>Country</td><td>Country List {{countryList?.length}}</td></tr>
+                    <tr *ngIf="countryList?.length > 0 else elseAgeBlock"><td></td><td></td><td></td></tr>
+                    <ng-template #elseAgeBlock><tr><td colspan="3">No data found</td></tr></ng-template> 
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
