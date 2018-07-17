@@ -14,18 +14,22 @@ export class CountryComponent{
   }
 
   countryList = {};
+  country_code='';
+  name='';
+
   ngOnInit() {
     this.onDataLoad();
   }
 
 
   onSubmit(formData: any){
+    console.log(formData);
     this.httpclient.post('http://localhost:8000/save-country',{
-      country_code:'US',
-      country:'United States'
+      country_code:formData.value.country_code,
+      name:formData.value.name,
     }).subscribe(
       (res) => {
-        console.log(res);
+        this.onDataLoad();        
       },  
       err => {
         console.log("Error occured");
@@ -37,11 +41,16 @@ export class CountryComponent{
     this.httpclient.get('http://localhost:8000/get-countrylist',{
     }).subscribe(
       (res) => {
-        
+        this.countryList = res;
       },  
       err => {
         console.log("Error occured");
       }
     )
+  }
+
+
+  reset(form: any){
+    form.resetForm();
   }
 }
